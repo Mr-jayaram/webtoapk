@@ -1,0 +1,24 @@
+{
+  "name": "Antigravity Premium App",
+  "short_name": "Antigravity",
+  "description": "A premium PWA built with HTML, CSS, and JS.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#6366f1",
+  "icons": [
+    {
+      "src": "app_icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Open Dashboard",
+      "url": "/index.html",
+      "description": "Go directly to the dashboard"
+    }
+  ]
+}
