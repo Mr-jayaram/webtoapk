@@ -1,139 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Add to Home Screen Demo</title>
-
-<meta name="theme-color" content="#0f172a">
-
-<style>
-body{
-  margin:0;
-  height:100vh;
-  background:linear-gradient(135deg,#0f172a,#1e293b);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-family:system-ui,sans-serif;
-}
-
-.app{
-  background:#fff;
-  padding:30px;
-  width:90%;
-  max-width:360px;
-  border-radius:18px;
-  text-align:center;
-  box-shadow:0 25px 45px rgba(0,0,0,.3);
-}
-
-h1{
-  margin-bottom:8px;
-  color:#0f172a;
-}
-
-p{
-  font-size:14px;
-  color:#64748b;
-  margin-bottom:20px;
-}
-
-button{
-  width:100%;
-  padding:12px;
-  font-size:15px;
-  font-weight:600;
-  border:none;
-  border-radius:12px;
-  cursor:pointer;
-}
-
-.install-btn{
-  background:#f97316;
-  color:#fff;
-}
-
-.install-btn:disabled{
-  background:#cbd5e1;
-  cursor:not-allowed;
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Antigravity | Premium PWA</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="style.css">
+    <meta name="theme-color" content="#0a0a0a">
+    <link rel="apple-touch-icon" href="app_icon.png">
+    <link rel="icon" type="image/png" href="app_icon.png">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <div class="glass-bg"></div>
+    
+    <header>
+        <nav>
+            <div class="logo">Antigravity</div>
+            <button id="installBtn" class="btn-primary" style="display: none;">Install App</button>
+        </nav>
+    </header>
 
-<div class="app">
-  <h1>📲 Install App</h1>
-  <p>Click below to add this app to your home screen</p>
+    <main>
+        <section class="hero">
+            <h1 class="gradient-text">Premium Experience.</h1>
+            <p class="subtitle">This is a Progressive Web App (PWA). You can add it to your home screen on mobile or install it as an app on your laptop.</p>
+            
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-icon">⚡</div>
+                    <h3>Fast Loading</h3>
+                    <p>Optimized with service workers for lightning fast speeds even offline.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">📱</div>
+                    <h3>Native Feel</h3>
+                    <p>Looks and feels like a real mobile application once installed.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🎨</div>
+                    <h3>Modern UI</h3>
+                    <p>Designed with glassmorphism and smooth gradients.</p>
+                </div>
+            </div>
+        </section>
+    </main>
 
-  <button id="installBtn" class="install-btn" disabled>
-    Add to Home Screen
-  </button>
-</div>
+    <footer>
+        <p>&copy; 2024 Antigravity AI. All rights reserved.</p>
+    </footer>
 
-<script>
-/* ===== MANIFEST ===== */
-const manifest = {
-  name: "A2HS Demo App",
-  short_name: "A2HS",
-  start_url: ".",
-  display: "standalone",
-  background_color: "#ffffff",
-  theme_color: "#0f172a",
-  icons: [
-    {
-      src: "https://cdn-icons-png.flaticon.com/512/888/888879.png",
-      sizes: "192x192",
-      type: "image/png"
-    },
-    {
-      src: "https://cdn-icons-png.flaticon.com/512/888/888879.png",
-      sizes: "512x512",
-      type: "image/png"
-    }
-  ]
-};
-
-const blob = new Blob([JSON.stringify(manifest)], { type: "application/json" });
-const manifestURL = URL.createObjectURL(blob);
-
-const link = document.createElement("link");
-link.rel = "manifest";
-link.href = manifestURL;
-document.head.appendChild(link);
-
-/* ===== SERVICE WORKER ===== */
-if ("serviceWorker" in navigator) {
-  const swCode = `
-    self.addEventListener('install', e => self.skipWaiting());
-    self.addEventListener('fetch', e => {});
-  `;
-  const swBlob = new Blob([swCode], { type: "application/javascript" });
-  const swURL = URL.createObjectURL(swBlob);
-  navigator.serviceWorker.register(swURL);
-}
-
-/* ===== ADD TO HOME SCREEN ===== */
-let deferredPrompt;
-const installBtn = document.getElementById("installBtn");
-
-window.addEventListener("beforeinstallprompt", e => {
-  e.preventDefault();
-  deferredPrompt = e;
-  installBtn.disabled = false;
-});
-
-installBtn.addEventListener("click", () => {
-  if (!deferredPrompt) return;
-
-  deferredPrompt.prompt();
-
-  deferredPrompt.userChoice.then(choice => {
-    deferredPrompt = null;
-    installBtn.disabled = true;
-  });
-});
-</script>
-
+    <script src="app.js"></script>
 </body>
 </html>
